@@ -1,0 +1,82 @@
+package com.shodhai.contest.config;
+import com.shodhai.contest.entity.*;
+import com.shodhai.contest.repository.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+@Component
+@RequiredArgsConstructor
+public class DataInitializer implements CommandLineRunner {
+    private final ContestRepository contestRepository;
+    private final ProblemRepository problemRepository;
+    @Override
+    public void run(String... args) {
+        Contest contest = new Contest();
+        contest.setId("contest-1");
+        contest.setName("Sample Coding Contest");
+        contest.setDescription("Practice contest with 3 problems");
+        contest.setStartTime(LocalDateTime.now().minusHours(1));
+        contest.setEndTime(LocalDateTime.now().plusHours(3));
+        contestRepository.save(contest);
+        Problem p1 = new Problem();
+        p1.setId("problem-1");
+        p1.setContest(contest);
+        p1.setTitle("Sum of Two Numbers");
+        p1.setStatement("Given two integers A and B, compute their sum.");
+        p1.setInputFormat("Two space-separated integers A and B");
+        p1.setOutputFormat("Single integer representing A + B");
+        TestCase tc1a = new TestCase();
+        tc1a.setProblem(p1);
+        tc1a.setInput("5 3");
+        tc1a.setExpectedOutput("8");
+        tc1a.setSample(true);
+        TestCase tc1b = new TestCase();
+        tc1b.setProblem(p1);
+        tc1b.setInput("10 20");
+        tc1b.setExpectedOutput("30");
+        tc1b.setSample(false);
+        p1.setTestCases(Arrays.asList(tc1a, tc1b));
+        problemRepository.save(p1);
+        Problem p2 = new Problem();
+        p2.setId("problem-2");
+        p2.setContest(contest);
+        p2.setTitle("Factorial");
+        p2.setStatement("Calculate factorial of a given number N.");
+        p2.setInputFormat("Single integer N (1 <= N <= 10)");
+        p2.setOutputFormat("Factorial of N");
+        TestCase tc2a = new TestCase();
+        tc2a.setProblem(p2);
+        tc2a.setInput("5");
+        tc2a.setExpectedOutput("120");
+        tc2a.setSample(true);
+        TestCase tc2b = new TestCase();
+        tc2b.setProblem(p2);
+        tc2b.setInput("3");
+        tc2b.setExpectedOutput("6");
+        tc2b.setSample(false);
+        p2.setTestCases(Arrays.asList(tc2a, tc2b));
+        problemRepository.save(p2);
+        Problem p3 = new Problem();
+        p3.setId("problem-3");
+        p3.setContest(contest);
+        p3.setTitle("Reverse String");
+        p3.setStatement("Given a string, output its reverse.");
+        p3.setInputFormat("Single line containing a string");
+        p3.setOutputFormat("Reversed string");
+        TestCase tc3a = new TestCase();
+        tc3a.setProblem(p3);
+        tc3a.setInput("hello");
+        tc3a.setExpectedOutput("olleh");
+        tc3a.setSample(true);
+        TestCase tc3b = new TestCase();
+        tc3b.setProblem(p3);
+        tc3b.setInput("world");
+        tc3b.setExpectedOutput("dlrow");
+        tc3b.setSample(false);
+        p3.setTestCases(Arrays.asList(tc3a, tc3b));
+        problemRepository.save(p3);
+        System.out.println("Sample data initialized!");
+    }
+}

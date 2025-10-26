@@ -1,0 +1,36 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/shodh-code:/tmp/shodh-code
+    depends_on:
+      - judge
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8080/api
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  judge:
+    build: ./judge
+    image: shodh-judge:latest
+    command: tail -f /dev/null
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
