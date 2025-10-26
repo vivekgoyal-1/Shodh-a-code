@@ -73,7 +73,7 @@ POST /submissions
 Content-Type: application/json
 
 {
-  "username": "john",
+  "username": "vivek",
   "contestId": "contest-1",
   "problemId": "problem-1",
   "code": "import java.util.Scanner;\npublic class Main {...}",
@@ -112,7 +112,7 @@ Response:
 ```json
 [
   {
-    "username": "alice",
+    "username": "vivek",
     "score": 300,
     "problemsSolved": 3,
     "rank": 1
