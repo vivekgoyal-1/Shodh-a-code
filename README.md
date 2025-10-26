@@ -13,14 +13,11 @@ A live coding contest platform with real-time code execution for Java, Python, a
 ### Setup
 
 ```bash
-# 1. Extract and navigate
-unzip shodh-a-code.zip
-cd shodh-a-code
 
-# 2. Start application
+# 1. Start application
 docker-compose up --build
 
-# 3. Access
+# 2. Access
 open http://localhost:3000
 ```
 
